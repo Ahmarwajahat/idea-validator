@@ -1,0 +1,30 @@
+2025-07-19 13:01:33,177 - __main__ - INFO - Incoming request: GET /
+2025-07-19 13:01:33,206 - __main__ - INFO - Response: GET / - 200 (28.12ms)
+2025-07-19 13:02:15,970 - __main__ - INFO - Incoming request: POST /analyze_idea
+2025-07-19 13:02:15,975 - __main__ - INFO - Received analyze_idea request
+2025-07-19 13:02:15,976 - __main__ - INFO - Validating idea: i start shoes shop in islamabad...
+2025-07-19 13:04:01,051 - __main__ - INFO - Validation completed in 105074.41ms
+2025-07-19 13:04:01,053 - __main__ - INFO - Response: POST /analyze_idea - 200 (105082.96ms)
+2025-07-19 13:04:47,509 - __main__ - INFO - Incoming request: POST /generate_pdf
+2025-07-19 13:04:47,519 - __main__ - WARNING - 404 Not Found: http://127.0.0.1:5000/generate_pdf
+2025-07-19 13:04:47,645 - __main__ - INFO - Response: POST /generate_pdf - 404 (135.85ms)
+2025-07-19 13:04:50,992 - __main__ - INFO - Incoming request: POST /save_analysis
+2025-07-19 13:04:50,996 - __main__ - WARNING - 404 Not Found: http://127.0.0.1:5000/save_analysis
+2025-07-19 13:04:51,012 - __main__ - INFO - Response: POST /save_analysis - 404 (20.12ms)
+2025-07-19 13:04:52,245 - __main__ - INFO - Incoming request: POST /save_analysis
+2025-07-19 13:04:52,249 - __main__ - WARNING - 404 Not Found: http://127.0.0.1:5000/save_analysis
+2025-07-19 13:04:52,254 - __main__ - INFO - Response: POST /save_analysis - 404 (8.28ms)
+2025-07-19 13:04:54,682 - __main__ - INFO - Incoming request: POST /save_analysis
+2025-07-19 13:04:54,687 - __main__ - WARNING - 404 Not Found: http://127.0.0.1:5000/save_analysis
+2025-07-19 13:04:54,693 - __main__ - INFO - Response: POST /save_analysis - 404 (10.79ms)
+2025-07-19 13:04:55,713 - __main__ - INFO - Incoming request: POST /save_analysis
+2025-07-19 13:04:55,720 - __main__ - WARNING - 404 Not Found: http://127.0.0.1:5000/save_analysis
+2025-07-19 13:04:55,734 - __main__ - INFO - Response: POST /save_analysis - 404 (20.44ms)
+2025-07-19 13:05:20,739 - __main__ - INFO - Incoming request: POST /analyze_idea
+2025-07-19 13:05:20,743 - __main__ - INFO - Received analyze_idea request
+2025-07-19 13:05:20,757 - __main__ - INFO - Validating idea: %PDF-1.7
+%³��
+3 0 obj
+<</Author (python-docx) /Com...
+2025-07-19 13:07:07,941 - __main__ - INFO - Validation completed in 107176.35ms
+2025-07-19 13:07:07,943 - __main__ - INFO - Response: POST /analyze_idea - 200 (107204.41ms)

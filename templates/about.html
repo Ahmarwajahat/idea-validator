@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - StartupValidator.ai</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .team-card {
+            transition: transform 0.3s;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+        .team-img {
+            height: 250px;
+            object-fit: cover;
+        }
+        .mission-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #6e8efb;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #6e8efb;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6e8efb;
+            border: 4px solid white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">StartupValidator.ai</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Validator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="features.html">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pricing.html">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-primary text-white py-5">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">About StartupValidator.ai</h1>
+            <p class="lead">Empowering entrepreneurs with AI-driven insights</p>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Our Story</h2>
+                    <p>Founded in 2023 by a team of serial entrepreneurs and AI experts, StartupValidator.ai was born out of frustration with the high failure rate of startups. We realized that most failures could be predicted and prevented with proper validation.</p>
+                    <p>After analyzing thousands of successful and failed startups, we developed our proprietary AI algorithm that can assess a startup idea's potential with remarkable accuracy.</p>
+                    <p>Today, we've helped over 10,000 entrepreneurs validate their ideas, avoid costly mistakes, and focus on building businesses with real potential.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Our team working" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container text-center">
+            <h2 class="display-5 mb-4">Our Mission</h2>
+            <p class="lead mx-auto" style="max-width: 800px;">
+                To democratize access to startup validation tools and help entrepreneurs make data-driven decisions about their business ideas. We believe that with the right information, more startups can succeed and create value in the world.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="validatedIdeas">10,000+</div>
+                        <h4>Ideas Validated</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="successRate">87%</div>
+                        <h4>User Satisfaction</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <div class="stat-number" id="teamMembers">15</div>
+                        <h4>Team Members</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Meet Our Team</h2>
+            
+            <div class="row g-4">
+                <!-- Team Member 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card team-card">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Team member" class="card-img-top team-img">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Sarah Johnson</h5>
+                            <p class="text-muted">CEO & Co-founder</p>
+                            <p class="card-text">Serial entrepreneur with 3 successful exits.</p>
+                            <div>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card team-card">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team member" class="card-img-top team-img">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Michael Chen</h5>
+                            <p class="text-muted">CTO & Co-founder</p>
+                            <p class="card-text">AI expert with PhD in Machine Learning.</p>
+                            <div>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card team-card">
+                        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Team member" class="card-img-top team-img">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Michael Rodriguez</h5>
+                            <p class="text-muted">Head of Product</p>
+                            <p class="card-text">Former product lead at two unicorn startups.</p>
+                            <div>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card team-card">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Team member" class="card-img-top team-img">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Priya Patel</h5>
+                            <p class="text-muted">Lead Data Scientist</p>
+                            <p class="card-text">Specializes in predictive analytics for startups.</p>
+                            <div>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Timeline -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Journey</h2>
+            
+            <div class="timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <h4>2021 - The Idea</h4>
+                    <p>After seeing too many friends launch startups that failed within months, Sarah and Michael began developing the initial algorithms to predict startup success.</p>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <h4>2022 - Early Validation</h4>
+                    <p>Tested the model with 500 real startup ideas, achieving 87% accuracy in predicting outcomes 12 months later.</p>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <h4>2023 Q1 - Company Founded</h4>
+                    <p>Officially launched StartupValidator.ai with seed funding from prominent angel investors.</p>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <h4>2023 Q3 - Public Launch</h4>
+                    <p>Released our public beta, helping over 1,000 entrepreneurs validate their ideas in the first month.</p>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item">
+                    <h4>Future - What's Next</h4>
+                    <p>Expanding our AI capabilities to provide even more detailed validation and personalized recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investors Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Backed By</h2>
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://via.placeholder.com/150x60?text=VC+Firm+1" alt="Investor 1" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://via.placeholder.com/150x60?text=VC+Firm+2" alt="Investor 2" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://via.placeholder.com/150x60?text=Angel+Group" alt="Investor 3" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img src="https://via.placeholder.com/150x60?text=Tech+Incubator" alt="Investor 4" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Validate Your Idea?</h2>
+            <a href="index.html" class="btn btn-primary btn-lg">Get Started for Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>StartupValidator.ai</h5>
+                    <p>Helping entrepreneurs validate their ideas since 2023.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Idea Validator</a></li>
+                        <li><a href="features.html" class="text-white">Features</a></li>
+                        <li><a href="pricing.html" class="text-white">Pricing</a></li>
+                        <li><a href="about.html" class="text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <a href="#" class="text-white me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 StartupValidator.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

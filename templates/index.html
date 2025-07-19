@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Startup Idea Validator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+        .idea-form {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .progress {
+            height: 25px;
+            border-radius: 12px;
+        }
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-message {
+            color: #dc3545;
+            display: none;
+            margin-top: 0.5rem;
+        }
+        .file-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .file-upload:hover {
+            border-color: #6e8efb;
+        }
+        .history-item {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .history-item:hover {
+            background-color: #f1f1f1;
+        }
+        .chart-container {
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">StartupValidator.ai</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Validator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">AI-Powered Startup Idea Validator</h1>
+            <p class="lead">Get instant feedback on your startup idea's potential before you invest time and money</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Idea Input Form -->
+        <div class="idea-form">
+            <h2 class="mb-4">Validate Your Startup Idea</h2>
+            <form id="ideaForm">
+                <div class="mb-3">
+                    <label for="ideaDescription" class="form-label">Describe your startup idea in detail:</label>
+                    <textarea class="form-control" id="ideaDescription" rows="6" required 
+                        placeholder="Example: 'A SaaS platform that helps small businesses automate their social media posting with AI-generated content tailored to their brand voice...'"></textarea>
+                    <div id="ideaError" class="error-message">Please provide a detailed description (at least 20 characters)</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Or upload a document:</label>
+                    <div class="file-upload" id="fileUpload">
+                        <i class="fas fa-file-upload fa-3x mb-2"></i>
+                        <p>Drag & drop your file here or click to browse</p>
+                        <small class="text-muted">Supports PDF, DOC, DOCX, TXT (max 5MB)</small>
+                        <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx,.txt">
+                    </div>
+                    <div id="fileInfo" class="small text-muted" style="display: none;"></div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="industrySelect" class="form-label">Industry:</label>
+                    <select class="form-select" id="industrySelect">
+                        <option value="">Select an industry (optional)</option>
+                        <option value="tech">Technology</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="finance">Finance</option>
+                        <option value="education">Education</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-check-circle me-2"></i>Validate Idea
+                    </button>
+                    
+                    <button type="button" class="btn btn-outline-secondary" id="historyBtn">
+                        <i class="fas fa-history me-2"></i>History
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Analyzing your idea with AI... This may take a moment.</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorAlert" class="alert alert-danger" style="display: none;">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span id="errorMessage"></span>
+        </div>
+
+        <!-- Results Section (initially hidden) -->
+        <div id="resultsSection" style="display: none;">
+            <div class="result-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Validation Results</h3>
+                    <div>
+                        <button class="btn btn-outline-primary me-2" id="saveAnalysisBtn">
+                            <i class="fas fa-save me-1"></i> Save
+                        </button>
+                        <button class="btn btn-primary" id="generatePdfBtn">
+                            <i class="fas fa-file-pdf me-1"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Analysis Summary -->
+                <div class="alert alert-info mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>Analysis ID:</strong> <span id="analysisId"></span>
+                        </div>
+                        <div>
+                            <strong>Date:</strong> <span id="analysisDate"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feasibility Score -->
+                <div class="mb-4">
+                    <h5>Feasibility Score: <span id="feasibilityScore"></span>/100</h5>
+                    <div class="progress mt-2">
+                        <div id="feasibilityBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <p id="feasibilityDesc" class="mt-2"></p>
+                </div>
+                
+                <!-- Success Probability -->
+                <div class="mb-4">
+                    <h5>Success Probability: <span id="successProbability"></span>%</h5>
+                    <div class="progress mt-2">
+                        <div id="successBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- Market Size Visualization -->
+                <div class="mb-4">
+                    <h5>Market Size Potential</h5>
+                    <div class="chart-container">
+                        <canvas id="marketSizeChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- SWOT Analysis -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">Strengths</h5>
+                                <ul id="strengthsList" class="card-text"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">Weaknesses</h5>
+                                <ul id="weaknessesList" class="card-text"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Opportunities</h5>
+                                <ul id="opportunitiesList" class="card-text"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">Threats</h5>
+                                <ul id="threatsList" class="card-text"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Competitors -->
+                <div class="mb-4">
+                    <h5>Competitors</h5>
+                    <div id="competitorsList" class="list-group"></div>
+                </div>
+                
+                <!-- Monetization Paths -->
+                <div class="mb-4">
+                    <h5>Monetization Paths</h5>
+                    <ul id="monetizationList" class="list-group"></ul>
+                </div>
+                
+                <!-- Investment Needed -->
+                <div class="mb-4">
+                    <h5>Investment Needed</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <p><strong>Amount:</strong> <span id="investmentAmount"></span></p>
+                            <p><strong>Level:</strong> <span id="investmentLevel"></span></p>
+                            <p><strong>Break Even:</strong> <span id="breakEven"></span></p>
+                            <p><strong>Main Cost Factors:</strong> <span id="costFactors"></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Improvements -->
+                <div class="mb-4">
+                    <h5>Recommended Improvements</h5>
+                    <ul id="improvementsList" class="list-group"></ul>
+                </div>
+                
+                <!-- Business Model Canvas -->
+                <div class="mb-4">
+                    <h5>Business Model Canvas</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Key Partners</h6>
+                                    <ul id="keyPartners" class="list-unstyled"></ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Key Activities</h6>
+                                    <ul id="keyActivities" class="list-unstyled"></ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Value Propositions</h6>
+                                    <ul id="valuePropositions" class="list-unstyled"></ul>
+                                </div>
+                            </div>
+                            <!-- Add more canvas elements as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Modal -->
+        <div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Your Analysis History</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group" id="historyList">
+                            <!-- History items will be added here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>StartupValidator.ai</h5>
+                    <p>Helping entrepreneurs validate their ideas since 2023.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white">Idea Validator</a></li>
+                        <li><a href="/features" class="text-white">Features</a></li>
+                        <li><a href="/pricing" class="text-white">Pricing</a></li>
+                        <li><a href="/about" class="text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <a href="#" class="text-white me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 StartupValidator.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let currentAnalysisId = '';
+        let marketSizeChart = null;
+        
+        // DOM elements
+        const fileUpload = document.getElementById('fileUpload');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const historyBtn = document.getElementById('historyBtn');
+        const generatePdfBtn = document.getElementById('generatePdfBtn');
+        const saveAnalysisBtn = document.getElementById('saveAnalysisBtn');
+        const historyModal = new bootstrap.Modal(document.getElementById('historyModal'));
+        
+        // Event listeners
+        fileUpload.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileUpload);
+        historyBtn.addEventListener('click', showHistory);
+        generatePdfBtn.addEventListener('click', generatePdf);
+        saveAnalysisBtn.addEventListener('click', saveAnalysis);
+        
+        // Initialize form submission
+        document.getElementById('ideaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            validateAndSubmit();
+        });
+        
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileUpload.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileUpload.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileUpload.addEventListener(eventName, unhighlight, false);
+        });
+        
+        fileUpload.addEventListener('drop', handleDrop, false);
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function highlight() {
+            fileUpload.classList.add('bg-light');
+        }
+        
+        function unhighlight() {
+            fileUpload.classList.remove('bg-light');
+        }
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileUpload();
+            }
+        }
+        
+        function handleFileUpload() {
+            const file = fileInput.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('File size exceeds 5MB limit');
+                    return;
+                }
+                
+                fileInfo.textContent = `Selected file: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                fileInfo.style.display = 'block';
+                
+                // Read file content
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('ideaDescription').value = e.target.result.substring(0, 5000);
+                };
+                
+                if (file.type === 'application/pdf') {
+                    // For PDFs, we'd need a more sophisticated parser in a real app
+                    reader.readAsText(file);
+                } else {
+                    reader.readAsText(file);
+                }
+            }
+        }
+        
+        function validateAndSubmit() {
+            // Validate input
+            const ideaDescription = document.getElementById('ideaDescription').value.trim();
+            if (ideaDescription.length < 20) {
+                document.getElementById('ideaError').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('ideaError').style.display = 'none';
+            }
+            
+            // Hide previous results and errors
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('errorAlert').style.display = 'none';
+            
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+            
+            // Get form data
+            const industry = document.getElementById('industrySelect').value;
+            
+            // Prepare request data
+            const requestData = {
+                idea: ideaDescription,
+                industry: industry
+            };
+            
+            // Send POST request to Flask backend
+            fetch('/analyze_idea', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Network response was not ok');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                if (data.error) {
+                    // Show error message
+                    document.getElementById('errorMessage').textContent = data.message;
+                    document.getElementById('errorAlert').style.display = 'block';
+                } else {
+                    // Store analysis ID
+                    currentAnalysisId = data.data.analysis_id || data.analysis_id || '';
+                    
+                    // Display results
+                    displayResults(data.data);
+                    
+                    // Show results section
+                    document.getElementById('resultsSection').style.display = 'block';
+                    
+                    // Scroll to results
+                    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                // Show error message
+                document.getElementById('errorMessage').textContent = error.message || 'An error occurred while analyzing your idea. Please try again later.';
+                document.getElementById('errorAlert').style.display = 'block';
+            });
+        }
+        
+        function displayResults(data) {
+            // Analysis metadata
+            document.getElementById('analysisId').textContent = currentAnalysisId || 'N/A';
+            document.getElementById('analysisDate').textContent = new Date(data.analysis_date || Date.now()).toLocaleString();
+            
+            // Feasibility Score
+            document.getElementById('feasibilityScore').textContent = data.feasibility_score;
+            document.getElementById('feasibilityBar').style.width = `${data.feasibility_score}%`;
+            document.getElementById('feasibilityDesc').textContent = data.feasibility_description;
+            
+            // Success Probability
+            document.getElementById('successProbability').textContent = data.success_probability;
+            document.getElementById('successBar').style.width = `${data.success_probability}%`;
+            
+            // Market Size Visualization
+            createMarketSizeChart(data.market_size || {});
+            
+            // SWOT Analysis
+            populateList('strengthsList', data.swot_analysis.strengths);
+            populateList('weaknessesList', data.swot_analysis.weaknesses);
+            populateList('opportunitiesList', data.swot_analysis.opportunities);
+            populateList('threatsList', data.swot_analysis.threats);
+            
+            // Competitors
+            const competitorsList = document.getElementById('competitorsList');
+            competitorsList.innerHTML = '';
+            (data.competitors || []).forEach(competitor => {
+                const item = document.createElement('a');
+                item.href = competitor.url || '#';
+                item.target = '_blank';
+                item.className = 'list-group-item list-group-item-action';
+                item.innerHTML = `<strong>${competitor.name || 'Unknown'}</strong><br><small>${competitor.snippet || ''}</small>`;
+                competitorsList.appendChild(item);
+            });
+            
+            // Monetization Paths
+            populateList('monetizationList', data.monetization_paths);
+            
+            // Investment Needed
+            document.getElementById('investmentAmount').textContent = data.investment_needed?.amount || 'N/A';
+            document.getElementById('investmentLevel').textContent = data.investment_needed?.level || 'N/A';
+            document.getElementById('breakEven').textContent = data.investment_needed?.break_even || 'N/A';
+            document.getElementById('costFactors').textContent = data.investment_needed?.cost_factors?.join(', ') || 'N/A';
+            
+            // Improvements
+            populateList('improvementsList', data.improvements);
+            
+            // Business Model Canvas
+            populateList('keyPartners', data.business_model_canvas?.key_partners);
+            populateList('keyActivities', data.business_model_canvas?.key_activities);
+            populateList('valuePropositions', data.business_model_canvas?.value_propositions);
+        }
+        
+        function createMarketSizeChart(marketData) {
+            const ctx = document.getElementById('marketSizeChart').getContext('2d');
+            
+            // Destroy previous chart if exists
+            if (marketSizeChart) {
+                marketSizeChart.destroy();
+            }
+            
+            // Default data if not provided
+            const tam = parseMarketValue(marketData.tam || '$10M');
+            const sam = parseMarketValue(marketData.sam || '$2M');
+            const som = parseMarketValue(marketData.som || '$500K');
+            
+            marketSizeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Addressable Market (TAM)', 'Serviceable Available Market (SAM)', 'Serviceable Obtainable Market (SOM)'],
+                    datasets: [{
+                        label: 'Market Size ($)',
+                        data: [tam, sam, som],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Market Value ($)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.raw.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function parseMarketValue(value) {
+            // Convert market size strings to numbers (simplified)
+            if (typeof value === 'number') return value;
+            
+            const multiplier = value.includes('M') ? 1000000 : 
+                             value.includes('B') ? 1000000000 : 1;
+            
+            const numValue = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+            return numValue * multiplier;
+        }
+        
+        function populateList(elementId, items) {
+            const list = document.getElementById(elementId);
+            if (!list) return;
+            
+            list.innerHTML = '';
+            
+            if (!items || items.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'list-group-item text-muted';
+                li.textContent = 'No data available';
+                list.appendChild(li);
+                return;
+            }
+            
+            if (typeof items === 'object' && !Array.isArray(items)) {
+                // Handle object case
+                for (const [key, value] of Object.entries(items)) {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    
+                    if (Array.isArray(value)) {
+                        li.innerHTML = `<strong>${key}:</strong> ${value.join(', ')}`;
+                    } else if (typeof value === 'object') {
+                        li.innerHTML = `<strong>${key}:</strong> ${JSON.stringify(value, null, 2)}`;
+                    } else {
+                        li.innerHTML = `<strong>${key}:</strong> ${value}`;
+                    }
+                    
+                    list.appendChild(li);
+                }
+                return;
+            }
+            
+            // Handle array case
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                
+                if (typeof item === 'object') {
+                    li.textContent = JSON.stringify(item);
+                } else {
+                    li.textContent = item;
+                }
+                
+                list.appendChild(li);
+            });
+        }
+        
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorAlert').style.display = 'block';
+        }
+        
+        function showHistory() {
+            // In a real app, you'd fetch this from your backend
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            // Mock data for demo
+            const mockHistory = [
+                { id: '1', date: new Date(Date.now() - 86400000), idea: 'AI-powered content generator' },
+                { id: '2', date: new Date(Date.now() - 172800000), idea: 'Eco-friendly packaging solution' },
+                { id: '3', date: new Date(Date.now() - 259200000), idea: 'Virtual fitness platform' }
+            ];
+            
+            if (mockHistory.length === 0) {
+                historyList.innerHTML = '<div class="text-center py-3 text-muted">No analysis history found</div>';
+                return;
+            }
+            
+            mockHistory.forEach(item => {
+                const historyItem = document.createElement('a');
+                historyItem.href = '#';
+                historyItem.className = 'list-group-item list-group-item-action history-item';
+                historyItem.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-1">${item.idea}</h6>
+                            <small>${item.date.toLocaleString()}</small>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                        </div>
+                    </div>
+                `;
+                
+                historyItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // In a real app, you'd load the analysis
+                    alert(`Loading analysis ${item.id}`);
+                });
+                
+                historyList.appendChild(historyItem);
+            });
+            
+            historyModal.show();
+        }
+        
+        function generatePdf() {
+            if (!currentAnalysisId) {
+                showError('No analysis to export');
+                return;
+            }
+            
+            // Get all the analysis data from the DOM
+            const analysisData = {
+                feasibility_score: document.getElementById('feasibilityScore').textContent,
+                success_probability: document.getElementById('successProbability').textContent,
+                // Add other data points as needed
+            };
+            
+            fetch('/generate_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    analysis_id: currentAnalysisId,
+                    data: analysisData
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to generate PDF');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `startup_analysis_${currentAnalysisId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            })
+            .catch(error => {
+                console.error('PDF generation error:', error);
+                showError('Failed to generate PDF report');
+            });
+        }
+        
+        function saveAnalysis() {
+            if (!currentAnalysisId) {
+                showError('No analysis to save');
+                return;
+            }
+            
+            // Get all the analysis data from the DOM
+            const analysisData = {
+                feasibility_score: document.getElementById('feasibilityScore').textContent,
+                success_probability: document.getElementById('successProbability').textContent,
+                // Add other data points as needed
+            };
+            
+            fetch('/save_analysis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    analysis_id: currentAnalysisId,
+                    data: analysisData
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to save analysis');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.message);
+                }
+                
+                alert('Analysis saved successfully!');
+            })
+            .catch(error => {
+                console.error('Save error:', error);
+                showError('Failed to save analysis');
+            });
+        }
+    </script>
+</body>
+</html>
