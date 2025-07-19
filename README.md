@@ -8,7 +8,7 @@
 
 ## 📽️ Demo
 
-🎥 **Watch the Project Demo**: [Click here to watch](https://www.linkedin.com/posts/ahmarwajahat_ai-startup-idea-validator-project-activity-000000000)  
+🎥 **Watch the Project Demo**: [Click here to watch]([https://www.linkedin.com/posts/ahmarwajahat_ai-startup-idea-validator-project-activity-000000000](https://www.linkedin.com/posts/ahmar-wajahat-812b5a34a_ai-startup-openai-activity-7352265450207997953-dBEj?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFdhQQ4BL0-CkwoqLpLOAMDzTrUAdRoA6xU))  
 🖼️ Project Preview:  
 ![Preview](./assets/demo.gif)
 
