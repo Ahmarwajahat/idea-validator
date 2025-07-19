@@ -2,7 +2,7 @@
 
 > An intelligent tool that helps aspiring entrepreneurs validate startup ideas using AI. Get instant feasibility analysis, competitor research, risk prediction, improvement tips, and a complete business model canvas — all in one place.
 
-![Thumbnail](C:\Users\abc\OneDrive\Desktop\idea thumb mail)
+![Thumbnail](https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-3330-622f-a1a6-d21ef8420f00/raw?se=2025-07-19T10%3A05%3A18Z&sp=r&sv=2024-08-04&sr=b&scid=ba5ae131-1dc4-5916-a53c-694ed31fd597&skoid=bbd22fc4-f881-4ea4-b2f3-c12033cf6a8b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-19T02%3A22%3A21Z&ske=2025-07-20T02%3A22%3A21Z&sks=b&skv=2024-08-04&sig=Z1DreHTv0P9xZZt1VApswcxyiGwPveltMx3UjeEOB80%3D)
 
 ---
 
